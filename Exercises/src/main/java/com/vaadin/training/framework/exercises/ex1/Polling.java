@@ -40,7 +40,10 @@ public class Polling extends VerticalLayout implements View, LongRunningOperatio
 	 * @return
 	 */
 	private Button createStartButton() {
-		Button startButton = new Button("Start", event -> startOperation(false));
+		Button startButton = new Button("Start", event -> {
+			System.out.println("Start button pressed");
+			startOperation(false);
+		});
 		startButton.setWidth("170px");
 		return startButton;
 	}
@@ -52,7 +55,10 @@ public class Polling extends VerticalLayout implements View, LongRunningOperatio
 	 * @return
 	 */
 	private Button createAsyncStartButton() {
-		Button startAsyncButton = new Button("Start Async", event -> startOperation(true));
+		Button startAsyncButton = new Button("Start Async", event -> {
+			System.out.println("Async button pressed");
+			startOperation(true);
+		});
 		startAsyncButton.setWidth("170px");
 		return startAsyncButton;
 	}
@@ -63,9 +69,12 @@ public class Polling extends VerticalLayout implements View, LongRunningOperatio
 	 * @return
 	 */
 	private Button createShowNotificationButton() {
-		Button button = new Button("Say Hello", event -> Notification.show("Hello world"));
-		button.setWidth("170px");
-		return button;
+		Button helloButton = new Button("Say Hello", event -> {
+			System.out.println("Hello button pressed");
+			Notification.show("Hello world");
+		});
+		helloButton.setWidth("170px");
+		return helloButton;
 	}
 
 	/**
@@ -101,6 +110,7 @@ public class Polling extends VerticalLayout implements View, LongRunningOperatio
 				statusLabel.setValue("Finished");
 				isRunning = false;
 				progressIndicator.setVisible(false);
+				System.out.println("Finished with long operation");
 			}
 		});
 	}
