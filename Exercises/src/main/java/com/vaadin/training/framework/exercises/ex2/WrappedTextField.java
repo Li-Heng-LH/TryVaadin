@@ -19,13 +19,14 @@ public class WrappedTextField extends CustomComponent {
 		errorMessageLabel = new Label();
 
 		// Create a new HorizontalLayout and set it as the composition root of this CustomComponent
-		// The composition root MUST be set
-		HorizontalLayout horizontalLayout = new HorizontalLayout();
-		setCompositionRoot(horizontalLayout);
+		final HorizontalLayout horizontalLayout = new HorizontalLayout();
 
 		// Add the textField and errorMessageLabel to the HorizontalLayout
 		horizontalLayout.addComponent(textField);
 		horizontalLayout.addComponent(errorMessageLabel);
+
+		// The composition root MUST be set
+		setCompositionRoot(horizontalLayout);
 	}
 
 	public String getText() {
