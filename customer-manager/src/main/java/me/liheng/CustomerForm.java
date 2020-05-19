@@ -19,7 +19,12 @@ public class CustomerForm extends FormLayout {
 
     private Binder<Customer> binder = new Binder<>(Customer.class);
 
-    public CustomerForm() {
+    private MainView mainView;
+    private CustomerService service = CustomerService.getInstance();
+
+    public CustomerForm(MainView mainView) {
+        this.mainView = mainView;
+
         status.setItems(CustomerStatus.values());
         HorizontalLayout buttons = new HorizontalLayout(save, delete);
         addComponents(firstName, lastName, status, birthDate, buttons);
@@ -30,6 +35,9 @@ public class CustomerForm extends FormLayout {
         // You can override automatic mapping using the @PropertyId annotation
         // in the CustomerForm input fields to explicitly declare the corresponding Customer instance variables
         binder.bindInstanceFields(this);
+
+        save.addClickListener(event -> save());
+        delete.addClickListener(event -> delete());
     }
 
     public void setCustomer(Customer customer) {
@@ -42,6 +50,20 @@ public class CustomerForm extends FormLayout {
             setVisible(true);
             firstName.focus();
         }
+    }
+
+    private void save() {
+        Customer customer = binder.getBean();
+        service.save(customer);
+        mainView.updateList();
+        setCustomer(null);
+    }
+
+    private void delete() {
+        Customer customer = binder.getBean();
+        service.delete(customer);
+        mainView.updateList();
+        setCustomer(null);
     }
 
 }
