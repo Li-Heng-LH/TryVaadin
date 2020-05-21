@@ -1,12 +1,14 @@
 package me.liheng;
 
 import com.vaadin.data.Binder;
+import com.vaadin.event.ShortcutAction;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.DateField;
+import com.vaadin.ui.themes.ValoTheme;
 
 
 public class CustomerForm extends FormLayout {
@@ -25,7 +27,13 @@ public class CustomerForm extends FormLayout {
     public CustomerForm(MainView mainView) {
         this.mainView = mainView;
 
+        // consume the minimum space defined by its content
+        setSizeUndefined();
+
         status.setItems(CustomerStatus.values());
+        save.setStyleName(ValoTheme.BUTTON_FRIENDLY);
+        save.setClickShortcut(ShortcutAction.KeyCode.ENTER);
+        delete.setStyleName(ValoTheme.BUTTON_DANGER);
         HorizontalLayout buttons = new HorizontalLayout(save, delete);
         addComponents(firstName, lastName, status, birthDate, buttons);
 
@@ -47,6 +55,7 @@ public class CustomerForm extends FormLayout {
         if (customer == null) {
             setVisible(false);
         } else {
+            delete.setVisible(customer.isPersisted());
             setVisible(true);
             firstName.focus();
         }
